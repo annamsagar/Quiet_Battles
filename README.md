@@ -281,10 +281,15 @@ The admin panel is accessible at `/admin/login` or via the discrete lock / "Admi
 ## ⚠️ Frontend-Only Limitations
 
 In strict adherence to the assessment instructions prohibiting backends, databases, and external payment APIs:
-1. **Payment Processing**: Checkout does not connect to Stripe, Razorpay, or banks; an assessment prototype notice is shown instead.
-2. **Authentication**: Admin credentials validate locally on the client; session status resides in `LocalStorage`.
-3. **Persistence Scope**: Content created or edited in the Admin CMS persists in the reviewer's browser `LocalStorage`. Clearing browser cache restores the baseline dataset.
-4. **Contact Form**: Form data is validated on the client and stored in local state; no external SMTP mailer is triggered.
+1. **No Backend / Database**: No Node.js, Spring Boot, PostgreSQL, MongoDB, or external database APIs are implemented.
+2. **Payment Processing**: Checkout does not connect to Stripe, Razorpay, or banks; an assessment prototype notice is shown instead.
+3. **Authentication**: Admin credentials validate locally on the client; session status resides in `LocalStorage`.
+4. **Persistence Scope**: Content created or edited in the Admin CMS persists in the reviewer's browser `LocalStorage`. Clearing browser cache restores the baseline dataset.
+5. **Contact Form**: Form data is validated on the client and stored in local state; no external SMTP mailer is triggered.
+
+For complete architectural details, interview defenses, and Spring Boot / PostgreSQL integration roadmaps, refer to:
+- [📖 Project Overview & Architecture Guide](docs/project-overview.md)
+- [🎙️ Technical Presentation & Interview Defense](docs/technical-presentation.md)
 
 ---
 
