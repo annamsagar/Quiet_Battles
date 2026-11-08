@@ -57,3 +57,4 @@ export const ProductGallery = ({ images = [], productName = 'Product' }) => {
     </div>
   );
 };
+

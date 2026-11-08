@@ -46,6 +46,8 @@ export const AppRoutes = () => {
           {/* Product Routes (Explicit & Dynamic) */}
           <Route path="products/gentle-armor" element={<ProductDetail />} />
           <Route path="products/:productSlug" element={<ProductDetail />} />
+          <Route path="products" element={<Navigate to="/products/gentle-armor" replace />} />
+          <Route path="shop" element={<Navigate to="/products/gentle-armor" replace />} />
 
           {/* Core Brand Pages */}
           <Route path="cart" element={<Cart />} />

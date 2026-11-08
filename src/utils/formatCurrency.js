@@ -14,3 +14,4 @@ export const formatCurrency = (amount, currency = 'INR') => {
     maximumFractionDigits: 0,
   }).format(amount);
 };
+

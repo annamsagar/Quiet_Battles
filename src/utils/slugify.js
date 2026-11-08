@@ -15,3 +15,4 @@ export const slugify = (text) => {
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
 };
+

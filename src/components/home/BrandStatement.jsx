@@ -52,3 +52,5 @@ export const BrandStatement = () => {
     </section>
   );
 };
+export default BrandStatement;
+

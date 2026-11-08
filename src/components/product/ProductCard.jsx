@@ -56,3 +56,4 @@ export const ProductCard = ({ product, index = 0 }) => {
     </motion.div>
   );
 };
+

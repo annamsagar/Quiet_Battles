@@ -1,11 +1,13 @@
 import React from 'react';
 import { PageTransition } from '../components/common/PageTransition';
-import { Hero } from '../components/home/Hero';
-import { BrandIntro } from '../components/home/BrandIntro';
+import { HeroSection } from '../components/home/HeroSection';
+import { BrandIntroduction } from '../components/home/BrandIntroduction';
+import { EditorialSection } from '../components/home/EditorialSection';
 import { FeaturedSeries } from '../components/home/FeaturedSeries';
 import { BrandPhilosophy } from '../components/home/BrandPhilosophy';
 import { FeaturedProduct } from '../components/home/FeaturedProduct';
 import { BrandStatement } from '../components/home/BrandStatement';
+import { FinalCTA } from '../components/home/FinalCTA';
 import { useContent } from '../context/ContentContext';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -19,22 +21,28 @@ export const Home = () => {
   return (
     <PageTransition>
       {/* SECTION 2: HERO */}
-      <Hero />
+      <HeroSection />
 
       {/* SECTION 3: BRAND INTRODUCTION */}
-      <BrandIntro />
+      <BrandIntroduction />
 
-      {/* SECTION 4: FEATURED SERIES */}
+      {/* SECTION 4: EDITORIAL IMAGE SECTION */}
+      <EditorialSection />
+
+      {/* SECTION 5: FEATURED SERIES */}
       <FeaturedSeries series={featuredSeries} />
 
-      {/* SECTION 5: BRAND PHILOSOPHY */}
+      {/* SECTION 6: BRAND PHILOSOPHY */}
       <BrandPhilosophy />
 
-      {/* SECTION 6: FEATURED PRODUCT */}
+      {/* SECTION 7: FEATURED PRODUCT */}
       <FeaturedProduct product={featuredProduct} />
 
-      {/* SECTION 7: BRAND STATEMENT */}
+      {/* SECTION 8: BRAND STATEMENT */}
       <BrandStatement />
+
+      {/* SECTION 9: FINAL CTA */}
+      <FinalCTA />
     </PageTransition>
   );
 };

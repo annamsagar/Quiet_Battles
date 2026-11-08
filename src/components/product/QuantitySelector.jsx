@@ -47,3 +47,4 @@ export const QuantitySelector = ({ quantity = 1, onQuantityChange, max = 10, min
     </div>
   );
 };
+

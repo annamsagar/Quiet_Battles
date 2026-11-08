@@ -68,3 +68,4 @@ export const ChapterCard = ({ chapter, seriesSlug = 'series-01', index = 0 }) =>
     </motion.div>
   );
 };
+

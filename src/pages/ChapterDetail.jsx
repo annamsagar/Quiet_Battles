@@ -64,6 +64,32 @@ export const ChapterDetail = () => {
       </div>
 
       <article className="max-w-5xl mx-auto px-6 sm:px-8">
+        {/* Quick Chapter Chronicle Switcher */}
+        <div className="mb-12 p-3 sm:p-4 bg-[#151515] border border-[#2B2B2B]">
+          <div className="flex items-center justify-between mb-3 text-[10px] font-mono text-[#A7A29B] uppercase tracking-wider">
+            <span>SERIES 01 CHRONICLES</span>
+            <span className="text-[#A88B65]">SELECT CHAPTER</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            {allChapters.map((c) => {
+              const isActive = c.slug === chapterSlug;
+              return (
+                <Link
+                  key={c.id}
+                  to={`/archive/${seriesSlug}/${c.slug}`}
+                  className={`p-2 sm:p-2.5 text-center border text-xs font-mono transition-all duration-200 ${
+                    isActive
+                      ? 'bg-[#A88B65] text-black border-[#A88B65] font-bold shadow-md'
+                      : 'bg-[#0A0A0A] text-[#A7A29B] border-[#262626] hover:text-[#F5F1EA] hover:border-[#A88B65]/40'
+                  }`}
+                >
+                  <span className="block text-[9px] opacity-80">CH. 0{c.number}</span>
+                  <span className="block font-serif text-xs sm:text-sm truncate">{c.title}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
         {/* Chapter Header */}
         <header className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <motion.div

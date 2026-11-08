@@ -10,3 +10,4 @@ export const LoadingState = ({ message = 'Loading story...' }) => {
     </div>
   );
 };
+

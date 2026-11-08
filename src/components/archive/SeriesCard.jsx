@@ -81,3 +81,4 @@ export const SeriesCard = ({ series, index = 0 }) => {
     </motion.div>
   );
 };
+

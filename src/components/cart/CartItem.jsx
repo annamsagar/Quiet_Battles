@@ -86,3 +86,4 @@ export const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
     </div>
   );
 };
+

@@ -26,7 +26,7 @@ export const FeaturedSeries = ({ series }) => {
             viewport={{ once: true }}
             className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono block mb-3"
           >
-            CURRENT EDITION / 2026
+            THE ARCHIVE / 001
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
@@ -99,3 +99,4 @@ export const FeaturedSeries = ({ series }) => {
     </section>
   );
 };
+

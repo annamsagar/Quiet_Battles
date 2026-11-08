@@ -41,3 +41,4 @@ export const AdminHeader = ({ onToggleSidebar, title = 'Editorial Management' })
     </header>
   );
 };
+

@@ -14,7 +14,7 @@ export const FeaturedProduct = ({ product }) => {
     collection: 'SERIES 01 – THE GENTLE ARMOR™',
     price: 1499,
     originalPrice: 1999,
-    description: 'An expression of quiet strength. The Gentle Armor Oversized Tee represents the balance between vulnerability and resilience.',
+    description: 'An expression of quiet strength. A reminder that softness and resilience can exist together.',
     images: [
       'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop',
     ],
@@ -25,10 +25,15 @@ export const FeaturedProduct = ({ product }) => {
     ],
   };
 
+  const displayDescription = currentProduct.slug === 'gentle-armor' 
+    ? "An expression of quiet strength. A reminder that softness and resilience can exist together."
+    : currentProduct.description;
+
   return (
     <section className="py-24 sm:py-32 bg-[#151515] border-b border-[#222222] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
           {/* Left Column: Product Visual with Editorial Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
@@ -61,11 +66,16 @@ export const FeaturedProduct = ({ product }) => {
           >
             <div className="space-y-3">
               <span className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono">
-                {currentProduct.collection}
+                OBJECTS OF EXPRESSION
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[#F5F1EA] tracking-wide">
-                {currentProduct.name}
-              </h2>
+              <div className="space-y-1">
+                <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#A7A29B] uppercase">
+                  THE GENTLE ARMOR.
+                </h3>
+                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[#F5F1EA] tracking-wide">
+                  {currentProduct.name}
+                </h2>
+              </div>
               <div className="flex items-center gap-3 pt-1">
                 <span className="text-2xl font-mono text-[#F5F1EA] font-medium">
                   {formatCurrency(currentProduct.price)}
@@ -82,15 +92,19 @@ export const FeaturedProduct = ({ product }) => {
             </div>
 
             <p className="text-sm sm:text-base text-[#A7A29B] leading-relaxed font-light">
-              {currentProduct.description}
+              "{displayDescription}"
             </p>
 
             {/* Micro Details List */}
             <div className="space-y-3 py-4 border-y border-[#2B2B2B]">
               <span className="text-xs uppercase font-mono tracking-widest text-[#F5F1EA] block mb-2">
-                ARCHITECTURAL DETAILS
+                ARCHITECTURAL SPECIFICATIONS
               </span>
-              {currentProduct.fabricDetails?.slice(0, 3).map((detail, idx) => (
+              {(currentProduct.fabricDetails || [
+                '280 GSM Heavyweight French Terry Loopback Cotton',
+                '100% Combed Compact Ring-Spun Organic Yarn',
+                'Drop-shoulder boxy silhouette with reinforced rib collar'
+              ]).slice(0, 3).map((detail, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-xs text-[#A7A29B]">
                   <Check size={14} className="text-[#A88B65] flex-shrink-0" />
                   <span>{detail}</span>
@@ -101,9 +115,9 @@ export const FeaturedProduct = ({ product }) => {
             <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
               <Link
                 to={`/products/${currentProduct.slug}`}
-                className="w-full sm:w-auto px-8 py-4 bg-[#F5F1EA] text-[#0A0A0A] text-xs uppercase tracking-widest-xl font-semibold hover:bg-[#A88B65] hover:text-white transition-all duration-300 text-center flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto px-8 py-4 bg-[#F5F1EA] text-[#0A0A0A] text-xs uppercase tracking-widest-xl font-semibold hover:bg-[#A88B65] hover:text-white transition-all duration-300 text-center flex items-center justify-center gap-2 group shadow-lg"
               >
-                <span>VIEW PRODUCT & PURCHASE</span>
+                <span>VIEW PRODUCT</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -113,3 +127,4 @@ export const FeaturedProduct = ({ product }) => {
     </section>
   );
 };
+export default FeaturedProduct;

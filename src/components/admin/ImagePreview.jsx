@@ -47,3 +47,4 @@ export const ImagePreview = ({ url, label = 'Image Preview' }) => {
     </div>
   );
 };
+

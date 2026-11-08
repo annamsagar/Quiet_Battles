@@ -39,3 +39,4 @@ export const AddToCartButton = ({ onAddToCart, disabled = false, isAdded = false
     </button>
   );
 };
+

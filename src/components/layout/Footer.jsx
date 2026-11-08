@@ -153,3 +153,4 @@ export const Footer = () => {
     </footer>
   );
 };
+
