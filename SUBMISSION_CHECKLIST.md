@@ -109,8 +109,23 @@
 
 ---
 
+### 7. Spring Boot Backend Phase 1 (Project Setup & Architecture)
+- [x] **Monolithic Layered Architecture**: Package structure `com.quietbattles` (`config`, `controller`, `dto`, `entity`, `repository`, `service`, `security`, `exception`, `mapper`).
+- [x] **Dependencies Configured**: `spring-boot-starter-web`, `spring-boot-starter-data-jpa`, `postgresql`, `spring-boot-starter-validation`, `spring-boot-starter-security`, `spring-boot-devtools`, `springdoc-openapi-starter-webmvc-ui`, `spring-boot-starter-test`, `lombok`.
+- [x] **PostgreSQL Connection**: Configured via environment variables (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`) with local defaults connecting to database `quiet_battles_db`.
+- [x] **CORS Configuration**: Allowed origins for local React frontend (`http://localhost:5173`, `http://localhost:3000`) with standard HTTP verbs and credentials support.
+- [x] **Health Check Endpoint**: `GET /api/v1/health` returning HTTP 200 with `{"status":"UP","application":"QUIET BATTLES BACKEND","message":"Backend is running successfully"}`.
+- [x] **Global Exception Handling**: Centralized `@RestControllerAdvice` delivering structured `ApiErrorResponse` payloads without stack trace leakage.
+- [x] **Swagger UI & OpenAPI**: Configured at `http://localhost:8081/swagger-ui/index.html` and `http://localhost:8081/v3/api-docs`.
+- [x] **Spring Security Foundation**: Stateless session management with public health and Swagger access, preparing for Phase 3 JWT authentication.
+- [x] **Unit & MockMvc Tests**: Tests passing (`2/2 tests passed, 0 failures`).
+- [x] **Runnable Maven Wrapper**: Self-contained `mvnw.cmd` and `mvnw` scripts included.
+
+---
+
 ## 🛠️ Verification Commands
 
+### Frontend Verification
 ```bash
 # 1. Install dependencies
 npm install
@@ -125,6 +140,21 @@ npm run build
 npm run preview
 ```
 
+### Backend Verification
+```bash
+# 1. Navigate to backend directory
+cd quiet-battles-backend
+
+# 2. Clean & compile
+.\mvnw.cmd clean compile
+
+# 3. Run automated tests
+.\mvnw.cmd test
+
+# 4. Start Spring Boot application on port 8081
+.\mvnw.cmd spring-boot:run
+```
+
 ---
 
 ## 📁 Key Documentation References
@@ -133,3 +163,4 @@ npm run preview
 - [`docs/project-overview.md`](docs/project-overview.md): Architectural design, state mechanics, and limitations.
 - [`docs/technical-presentation.md`](docs/technical-presentation.md): Interview defense presentation and Spring Boot / PostgreSQL roadmap.
 - [`preview_dashboard.html`](C:/Users/asaga/.gemini/antigravity/brain/68b153b1-17dd-420e-8947-05906d080819/preview_dashboard.html): Interactive viewport switcher artifact (Desktop, Laptop, Tablet, Mobile).
+
