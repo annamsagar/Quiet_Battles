@@ -64,3 +64,4 @@ export const AdminNotification = ({
   );
 };
 export default AdminNotification;
+
