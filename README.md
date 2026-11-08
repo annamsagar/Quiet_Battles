@@ -55,13 +55,25 @@ QUIET BATTLES/
 │   ├── robots.txt               # SEO bot access rules
 │   └── sitemap.xml              # Crawlable site directory
 ├── src/
+│   ├── admin/                   # Re-exports for evaluation alias paths
+│   │   ├── AdminDashboard.jsx
+│   │   ├── AdminLogin.jsx
+│   │   ├── ChapterManagement.jsx
+│   │   ├── ProductManagement.jsx
+│   │   ├── SeriesManagement.jsx
+│   │   └── index.js
 │   ├── components/
 │   │   ├── admin/               # Admin CMS UI components
 │   │   │   ├── AdminHeader.jsx
+│   │   │   ├── AdminNotification.jsx
 │   │   │   ├── AdminSidebar.jsx
 │   │   │   ├── DashboardCard.jsx
+│   │   │   ├── DataTable.jsx
 │   │   │   ├── DeleteConfirmation.jsx
+│   │   │   ├── EmptyState.jsx
+│   │   │   ├── FormField.jsx
 │   │   │   ├── ImagePreview.jsx
+│   │   │   ├── SearchBar.jsx
 │   │   │   └── StatusBadge.jsx
 │   │   ├── archive/             # Archive & series UI cards
 │   │   │   ├── ChapterCard.jsx
