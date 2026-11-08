@@ -134,7 +134,7 @@ export const ContentProvider = ({ children }) => {
 
   const getChaptersBySeries = (seriesSlug) => {
     return chaptersList
-      .filter((c) => c.seriesSlug === seriesSlug && (c.status === 'published' || !c.status))
+      .filter((c) => c.seriesSlug === seriesSlug && c.published !== false && (c.status === 'published' || !c.status))
       .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
   };
 
@@ -146,7 +146,9 @@ export const ContentProvider = ({ children }) => {
 
   const getChapterBySlug = (seriesSlug, chapterSlug) => {
     return chaptersList.find(
-      (c) => c.seriesSlug === seriesSlug && c.slug === chapterSlug
+      (c) =>
+        c.seriesSlug === seriesSlug &&
+        (c.slug === chapterSlug || c.aliases?.includes(chapterSlug))
     );
   };
 

@@ -98,10 +98,16 @@ export const ChapterManagement = () => {
     e.preventDefault();
     if (!formData.title.trim()) return;
 
+    const payload = {
+      ...formData,
+      published: formData.status === 'published',
+      aliases: [formData.slug, `chapter-${formData.number}`],
+    };
+
     if (editingChapter) {
-      updateChapter(editingChapter.id, formData);
+      updateChapter(editingChapter.id, payload);
     } else {
-      addChapter(formData);
+      addChapter(payload);
     }
     setIsModalOpen(false);
   };

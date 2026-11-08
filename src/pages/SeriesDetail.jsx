@@ -1,12 +1,13 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PageTransition } from '../components/common/PageTransition';
-import { ChapterCard } from '../components/archive/ChapterCard';
 import { EditorialImage } from '../components/common/EditorialImage';
+import { SeriesIntroduction } from '../components/archive/SeriesIntroduction';
+import { ChapterGrid } from '../components/archive/ChapterGrid';
 import { useContent } from '../context/ContentContext';
 import { EmptyState } from '../components/common/EmptyState';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { ArrowLeft, BookOpen, Layers, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const SeriesDetail = () => {
@@ -32,9 +33,9 @@ export const SeriesDetail = () => {
   }
 
   return (
-    <PageTransition className="pt-24 sm:pt-28 pb-24 sm:pb-32">
-      {/* Editorial Breadcrumbs */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 border-b border-[#222222] mb-8">
+    <PageTransition className="pt-24 sm:pt-28 pb-24 sm:pb-32 bg-[#0A0A0A]">
+      {/* Top Breadcrumb Navigation */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 border-b border-[#222222] mb-8 sm:mb-12">
         <div className="flex items-center gap-3 text-xs font-mono text-[#A7A29B] uppercase tracking-wider">
           <Link to="/archive" className="hover:text-[#A88B65] flex items-center gap-1.5 transition-colors">
             <ArrowLeft size={13} />
@@ -45,9 +46,9 @@ export const SeriesDetail = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        {/* Full-Width Cinematic Series Cover Hero */}
-        <div className="relative aspect-[16/9] sm:aspect-[21/9] bg-[#151515] border border-[#2B2B2B] overflow-hidden mb-12 sm:mb-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 space-y-16 sm:space-y-24">
+        {/* SECTION 1 – SERIES HERO */}
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] bg-[#151515] border border-[#2B2B2B] overflow-hidden">
           <EditorialImage
             src={series.coverImage}
             alt={series.title}
@@ -57,82 +58,62 @@ export const SeriesDetail = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
 
           {/* Hero Overlay Details */}
-          <div className="absolute bottom-6 left-6 sm:bottom-12 sm:left-12 max-w-3xl z-10 space-y-3">
-            <span className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono">
-              SERIES {series.number} EDITION
-            </span>
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#F5F1EA] tracking-wide">
-              {series.fullTitle || series.title}
-            </h1>
+          <div className="absolute bottom-6 left-6 sm:bottom-12 sm:left-12 max-w-3xl z-10 space-y-3 sm:space-y-4">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono block"
+            >
+              SERIES {series.number}
+            </motion.span>
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#F5F1EA] tracking-wide uppercase leading-none"
+            >
+              {series.title}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="font-serif text-lg sm:text-2xl text-[#A7A29B] italic font-light"
+            >
+              "{series.supportingStatement || 'Strength does not always need to be loud.'}"
+            </motion.p>
           </div>
         </div>
 
-        {/* Editorial Introduction & Series Philosophy */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pb-16 border-b border-[#222222] mb-16">
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs uppercase tracking-widest-xl text-[#A88B65] font-mono">
-              CURATORIAL STATEMENT
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-[#F5F1EA] leading-snug">
-              "An exploration of resilience, softness and strength. Designed for those who carry more than they reveal."
-            </h2>
+        {/* SECTION 2 – SERIES INTRODUCTION */}
+        <SeriesIntroduction series={series} />
+
+        {/* SECTION 3 – CHAPTER COLLECTION (All five chapters in asymmetric grid) */}
+        <ChapterGrid chapters={chapters} seriesSlug={seriesSlug} />
+
+        {/* SECTION 4 – CLOSING STATEMENT */}
+        <section className="py-20 sm:py-28 text-center bg-[#151515] border border-[#2B2B2B] p-8 sm:p-14 space-y-6 shadow-2xl">
+          <span className="text-xs uppercase font-mono tracking-widest-2xl text-[#A88B65]">
+            INAUGURAL COLLECTION
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-[#F5F1EA] tracking-wide uppercase">
+            "THE STORY CONTINUES."
+          </h2>
+          <p className="text-sm sm:text-base text-[#A7A29B] font-light max-w-lg mx-auto leading-relaxed">
+            Five chronicles exploring the silence, weight, resilience, rebuilding, and armor of the human soul.
+          </p>
+          <div className="pt-4">
+            <Link
+              to="/archive"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#F5F1EA] text-[#0A0A0A] hover:bg-[#A88B65] hover:text-white text-xs uppercase tracking-widest-xl font-semibold transition-all duration-300 shadow-xl group"
+            >
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+              <span>RETURN TO THE ARCHIVE</span>
+            </Link>
           </div>
-
-          <div className="lg:col-span-7 space-y-6 text-[#A7A29B] font-light text-base sm:text-lg leading-relaxed">
-            <p>
-              {series.extendedDescription || series.description}
-            </p>
-            <p>
-              Divided across five sequential narrative chapters, Series 01 follows the progression of private vulnerability evolving into quiet structural fortitude. Each chapter examines a distinct psychological state, accompanied by architectural tailoring.
-            </p>
-
-            <div className="pt-2 flex flex-wrap gap-6 text-xs font-mono uppercase text-[#F5F1EA]">
-              <div className="flex items-center gap-2">
-                <Layers size={14} className="text-[#A88B65]" />
-                <span>{chapters.length} Chronicles Complete</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={14} className="text-[#A88B65]" />
-                <span>Heavyweight Construction</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Five Chapter Cards Section */}
-        <div className="space-y-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#222222] pb-6">
-            <div>
-              <span className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono block mb-1">
-                SEQUENTIAL CHAPTERS
-              </span>
-              <h3 className="font-serif text-2xl sm:text-4xl font-light text-[#F5F1EA]">
-                EXPLORE THE CHRONICLES
-              </h3>
-            </div>
-            <p className="text-xs text-[#A7A29B] font-mono uppercase">
-              SELECT A CHAPTER TO BEGIN READING
-            </p>
-          </div>
-
-          {chapters.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {chapters.map((chapter, index) => (
-                <ChapterCard
-                  key={chapter.id}
-                  chapter={chapter}
-                  seriesSlug={seriesSlug}
-                  index={index}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              title="No Chapters Available"
-              description="No chapters have been published for this series yet."
-            />
-          )}
-        </div>
+        </section>
       </div>
     </PageTransition>
   );

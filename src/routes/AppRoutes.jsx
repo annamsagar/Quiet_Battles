@@ -35,12 +35,10 @@ export const AppRoutes = () => {
           {/* /archive */}
           <Route path="archive" element={<Archive />} />
 
-          {/* Series Routes (Explicit & Dynamic) */}
-          <Route path="archive/series-01" element={<SeriesDetail />} />
+          {/* Series Routes (Dynamic & Explicit) */}
           <Route path="archive/:seriesSlug" element={<SeriesDetail />} />
 
-          {/* Chapter Routes (Explicit & Dynamic) */}
-          <Route path="archive/series-01/chapter-01" element={<ChapterDetail />} />
+          {/* Chapter Routes (Dynamic & Explicit) */}
           <Route path="archive/:seriesSlug/:chapterSlug" element={<ChapterDetail />} />
 
           {/* Product Routes (Explicit & Dynamic) */}
