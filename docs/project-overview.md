@@ -182,3 +182,4 @@ To transition QUIET BATTLES™ to a full-stack enterprise production platform:
    - Tables: `series`, `chapters`, `products`, `product_images`, `product_sizes`, `orders`, `order_items`, `users`, `roles`.
 3. **Spring Security & JWT**:
    - Replace demo credentials with `AuthenticationManager`, BCrypt password encoder, and stateless JWT authorization filters.
+
