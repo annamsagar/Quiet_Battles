@@ -78,3 +78,4 @@ export const RelatedProductSection = ({ product }) => {
   );
 };
 export default RelatedProductSection;
+

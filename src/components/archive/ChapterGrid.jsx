@@ -43,3 +43,4 @@ export const ChapterGrid = ({ chapters = [], seriesSlug = 'series-01' }) => {
   );
 };
 export default ChapterGrid;
+
