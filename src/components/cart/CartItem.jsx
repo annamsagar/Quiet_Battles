@@ -15,8 +15,12 @@ export const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
           className="w-20 sm:w-24 aspect-[3/4] bg-[#151515] border border-[#333333] flex-shrink-0 overflow-hidden"
         >
           <img
-            src={item.image}
+            src={item.image || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop'}
             alt={item.name}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop';
+            }}
             className="w-full h-full object-cover"
           />
         </Link>

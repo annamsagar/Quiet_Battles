@@ -36,8 +36,12 @@ export const RelatedProductSection = ({ product }) => {
           className="w-full md:w-56 aspect-[3/4] bg-[#0A0A0A] flex-shrink-0 overflow-hidden border border-[#333333] group relative block"
         >
           <img
-            src={currentProduct.images[0]}
+            src={currentProduct.images[0] || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop'}
             alt={currentProduct.name}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop';
+            }}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute top-3 left-3 bg-[#0A0A0A]/85 backdrop-blur-md px-2 py-0.5 text-[9px] font-mono uppercase tracking-widest text-[#A88B65] border border-[#333333]">
