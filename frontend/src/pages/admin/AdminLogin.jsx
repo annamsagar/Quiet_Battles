@@ -41,7 +41,7 @@ export const AdminLogin = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setAuthError(null);
     const errs = validate();
@@ -51,7 +51,7 @@ export const AdminLogin = () => {
     }
 
     setIsSubmitting(true);
-    const result = login(email, password);
+    const result = await login(email, password);
 
     if (result.success) {
       setIsSuccess(true);

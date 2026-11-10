@@ -66,8 +66,8 @@ class RestApiControllerIntegrationTest {
 
         // 2. Create Product via POST /api/v1/products
         ProductRequest productReq = new ProductRequest(
-                "THE GENTLE ARMOR OVERSIZED TEE",
-                "gentle-armor-oversized-tee",
+                "REST ARCHITECTURAL SILHOUETTE TEE",
+                "rest-architectural-tee",
                 "Heavyweight organic luxury cotton with raw-edge architectural seams.",
                 new BigDecimal("1499.00"),
                 "Tees",
@@ -82,7 +82,7 @@ class RestApiControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(productReq)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.slug").value("gentle-armor-oversized-tee"))
+                .andExpect(jsonPath("$.slug").value("rest-architectural-tee"))
                 .andExpect(jsonPath("$.price").value(1499.00))
                 .andExpect(jsonPath("$.availableSizes", hasItems("S", "M", "L", "XL", "XXL")))
                 .andReturn();
@@ -118,10 +118,10 @@ class RestApiControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(invalidUrlReq)))
                 .andExpect(status().isBadRequest());
 
-        // 4. Create Chapter 1: THE SILENCE via POST /api/v1/chapters
+        // 4. Create Chapter 1 via POST /api/v1/chapters
         ChapterRequest chapter1Req = new ChapterRequest(
                 "THE SILENCE",
-                "the-silence",
+                "test-the-silence-chapter",
                 1,
                 "Introspection",
                 "Before the armor is worn, there is stillness.",
@@ -140,7 +140,7 @@ class RestApiControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(chapter1Req)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.slug").value("the-silence"))
+                .andExpect(jsonPath("$.slug").value("test-the-silence-chapter"))
                 .andExpect(jsonPath("$.seriesTitle").value("THE GENTLE ARMOR"))
                 .andExpect(jsonPath("$.productId").value(productId));
 
@@ -163,23 +163,23 @@ class RestApiControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].title").value("THE SILENCE"));
 
         // 5d. GET /api/v1/public/chapters/{seriesSlug}/{chapterSlug}
-        mockMvc.perform(get("/api/v1/public/chapters/{seriesSlug}/{chapterSlug}", "the-gentle-armor", "the-silence"))
+        mockMvc.perform(get("/api/v1/public/chapters/{seriesSlug}/{chapterSlug}", "the-gentle-armor", "test-the-silence-chapter"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("THE SILENCE"))
                 .andExpect(jsonPath("$.productId").value(productId));
 
         // 5e. GET /api/v1/public/products with search
         mockMvc.perform(get("/api/v1/public/products")
-                        .param("search", "armor"))
+                        .param("search", "Architectural"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$[0].name").value("THE GENTLE ARMOR OVERSIZED TEE"))
+                .andExpect(jsonPath("$[0].name").value("REST ARCHITECTURAL SILHOUETTE TEE"))
                 .andExpect(jsonPath("$[0].images", hasSize(1)));
 
         // 5f. GET /api/v1/public/products/{slug}
-        mockMvc.perform(get("/api/v1/public/products/{slug}", "gentle-armor-oversized-tee"))
+        mockMvc.perform(get("/api/v1/public/products/{slug}", "rest-architectural-tee"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.slug").value("gentle-armor-oversized-tee"))
+                .andExpect(jsonPath("$.slug").value("rest-architectural-tee"))
                 .andExpect(jsonPath("$.availableSizes", hasItems("S", "M", "L", "XL", "XXL")));
 
         // 6. Test DRAFT Exclusion from Public Endpoints

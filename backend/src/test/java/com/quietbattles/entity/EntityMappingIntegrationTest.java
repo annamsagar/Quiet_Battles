@@ -68,7 +68,7 @@ class EntityMappingIntegrationTest {
         // 1. Create Series
         Series series = new Series(
                 "SERIES 01 - THE GENTLE ARMOR™",
-                "series-01",
+                "test-series-mapping-01",
                 "An exploration of resilience, softness and strength.",
                 "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200",
                 ContentStatus.PUBLISHED
@@ -106,7 +106,7 @@ class EntityMappingIntegrationTest {
         // 3. Create Chapter referencing Series and Product
         Chapter chapter1 = new Chapter(
                 "The Silence",
-                "the-silence",
+                "test-mapping-silence",
                 1,
                 "Introspection & stillness",
                 "Before the armor is worn, there is stillness.",
@@ -125,7 +125,7 @@ class EntityMappingIntegrationTest {
         assertThat(savedChapter.getProduct().getId()).isEqualTo(savedProduct.getId());
 
         // Verify retrieval queries
-        Optional<Chapter> foundChapter = chapterRepository.findBySlug("the-silence");
+        Optional<Chapter> foundChapter = chapterRepository.findBySlug("test-mapping-silence");
         assertThat(foundChapter).isPresent();
         assertThat(foundChapter.get().getProduct().getName()).isEqualTo("The Gentle Armor Oversized Trench Coat");
 

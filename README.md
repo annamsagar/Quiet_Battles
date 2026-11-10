@@ -1,224 +1,240 @@
-# QUIET BATTLES™ – Luxury Minimalist Fashion Brand Website
+# QUIET BATTLES™ – Luxury Fashion Brand Full-Stack Application
 
-> **"WEAR YOUR BATTLES."**  
-> An international luxury streetwear technical assessment project for **Pholus Globos Facility Service Pvt. Ltd.**
-
----
-
-## 🏛️ Brand Overview & Philosophy
-
-**QUIET BATTLES™** represents inner strength, personal struggles, silent achievements, emotional resilience, and individual identity. Conceived in opposition to contemporary performative culture, the brand creates tactile armor for individuals who fight silent battles without seeking applause or validation.
-
-- **Brand Tagline**: `WEAR YOUR BATTLES.`
-- **Inaugural Collection**: `SERIES 01 – THE GENTLE ARMOR™`
-- **Assessment Issue**: Frontend Technical Assessment Project
-- **Issuing Entity**: Pholus Globos Facility Service Pvt. Ltd.
+> *"WEAR YOUR BATTLES."*  
+> **QUIET BATTLES™** is an architectural luxury streetwear brand born from the tension between vulnerability and resilience. This production-ready full-stack application integrates an editorial digital storefront with a secure administrative Content Management System (CMS) and a high-performance RESTful API backend.
 
 ---
 
-## 💻 Technology Stack
+## 1. System Architecture
 
-| Layer | Technology |
-|---|---|
-| **Framework / Bundler** | React.js 18 + Vite |
-| **Language** | JavaScript (ES6+ Modules, strictly no TypeScript) |
-| **Styling Engine** | Tailwind CSS (v3) + Custom Luxury Utility Classes |
-| **Routing** | React Router DOM (v6) with Code Splitting (`React.lazy` + `Suspense`) |
-| **Animation** | Framer Motion (respects `prefers-reduced-motion`) |
-| **Icons** | Lucide React |
-| **State Management** | React Context API (`CartContext`, `ContentContext`, `AdminContext`) |
-| **Persistence** | Browser `LocalStorage` with fallback error mitigation |
-| **Typography** | Cormorant Garamond, Playfair Display, and Inter via Google Fonts |
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       CLIENT TIER – REACT 18 + VITE                         │
+│  - Tailwind CSS Luxury Design System (#0A0A0A, #151515, #F5F1EA, #A88B65)   │
+│  - React Router v6 (Public Storefront & Protected /admin/* Routes)          │
+│  - Axios Client with Dynamic JWT Bearer Interceptors & Auto-Logout          │
+│  - LocalStorage Caching & Optimistic State Synchronization                  │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ HTTP / REST / JSON
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    BACKEND TIER – SPRING BOOT 3 (JAVA 21)                   │
+│  - Spring Security 6 (Stateless JWT Filter & BCrypt Password Hashing)       │
+│  - Layered Clean Architecture (Controller -> Service -> Repository -> JPA) │
+│  - Custom Jakarta Image URL Validators & Scoped Image Ownership Enforcement │
+│  - Springdoc OpenAPI 3.0 / Swagger UI Specification                         │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ HikariCP SSL Connection Pool
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 DATABASE TIER – MANAGED NEON POSTGRESQL                     │
+│  - Serverless PostgreSQL on AWS us-east-2 (SSL require)                     │
+│  - Tables: users, series, chapters, products, product_images, product_sizes │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🎨 Visual Identity & Color Palette
+## 2. Technology Stack
 
-| Token | Hex Value | Usage |
-|---|---|---|
-| **Main Background** | `#0A0A0A` | Primary canvas, cinematic hero, full-width statements |
-| **Secondary Background** | `#151515` | Section contrasts, sidebars, drawer overlays |
-| **Card Background** | `#1B1B1B` | Product cards, editorial boxes, chapter cards |
-| **Primary Text** | `#F5F1EA` | Editorial serif headings, key typography |
-| **Secondary Text** | `#A7A29B` | Body narratives, subtitles, captions |
-| **Luxury Accent** | `#A88B65` | Muted gold accent, focus rings, hover states |
-| **Border Tone** | `#333333` | Architectural minimalist outlines, dividers |
+### Frontend
+- **Framework**: React 18 (Vite SPA)
+- **Language**: JavaScript (Strictly zero TypeScript)
+- **Styling**: Tailwind CSS with custom editorial typography (`Playfair Display`, `Inter`, `JetBrains Mono`)
+- **Animation**: Framer Motion
+- **HTTP Client**: Axios with automatic request interceptors
+- **Icons**: Lucide React
+- **Hosting**: Vercel (`vercel.json` SPA routing)
+
+### Backend
+- **Framework**: Spring Boot 3.2.5
+- **JDK**: Java 21 (Eclipse Temurin)
+- **Security**: Spring Security 6 + JJWT 0.12.5 (HMAC-SHA256)
+- **Persistence**: Spring Data JPA + Hibernate 6 ORM
+- **Database**: PostgreSQL (Neon Cloud Serverless)
+- **API Docs**: Springdoc OpenAPI 3.0 / Swagger UI
+- **Build Tool**: Apache Maven Wrapper (`./mvnw`)
+- **Hosting**: Render (`render.yaml` + multi-stage `Dockerfile`)
 
 ---
 
-## 📂 Project Architecture
+## 3. Project Directory Structure
 
 ```
 QUIET BATTLES/
-├── frontend/                        # React 18 + Vite Luxury Fashion Brand Application
-│   ├── public/                      # Monogram favicon, robots.txt, sitemap.xml
-│   ├── src/                         # React components, pages, context, hooks
-│   │   ├── admin/                   # Re-exports for evaluation alias paths
-│   │   ├── components/              # Reusable UI (home, product, cart, archive, admin)
-│   │   ├── context/                 # CartContext, ContentContext, AdminContext
-│   │   ├── data/                    # Series, Chapter & Product baseline data
-│   │   ├── layouts/                 # PublicLayout & AdminLayout
-│   │   ├── pages/                   # Lazy-loaded page components
-│   │   └── routes/                  # AppRoutes with ProtectedRoute guard
-│   ├── package.json                 # Pure JavaScript dependencies
-│   ├── vite.config.js               # Port 3000
-│   └── vercel.json                  # SPA routing rules
-├── backend/                         # Spring Boot 3.2.5 REST API Service
-│   ├── src/                         # Java controllers, config, security, exceptions
-│   ├── pom.xml                      # Maven dependencies
-│   ├── mvnw & mvnw.cmd              # Self-contained Maven wrapper
-│   └── README.md                    # Backend engineering documentation
-├── docs/                            # Architectural guides & technical presentation
-├── README.md                        # Master repository documentation
-├── SUBMISSION_CHECKLIST.md          # Technical assessment verification checklist
-└── vercel.json                      # Monorepo deployment configuration
+├── backend/                               # Spring Boot 3 Maven Project
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/quietbattles/
+│   │   │   │   ├── config/                # CorsConfig, AdminUserSeeder, OpenApiConfig
+│   │   │   │   ├── controller/            # Series, Chapter, Product, Auth, Health, Public
+│   │   │   │   ├── dto/                   # Request & Response DTOs
+│   │   │   │   ├── entity/                # JPA Entities (User, Series, Chapter, Product, ProductImage)
+│   │   │   │   ├── enums/                 # ContentStatus (PUBLISHED, DRAFT), UserRole (ADMIN)
+│   │   │   │   ├── exception/             # GlobalExceptionHandler, Custom Exceptions
+│   │   │   │   ├── mapper/                # Entity-to-DTO Mappers
+│   │   │   │   ├── repository/            # Spring Data JPA Repositories
+│   │   │   │   ├── security/              # JwtService, JwtAuthenticationFilter, SecurityConfig
+│   │   │   │   ├── service/               # Service Interfaces & Implementations
+│   │   │   │   └── validation/            # @ValidImageUrl Annotation & Validator
+│   │   │   └── resources/
+│   │   │       └── application.properties # Main Spring configuration
+│   │   └── test/                          # Comprehensive JUnit 5 & MockMvc integration tests
+│   ├── Dockerfile                         # Production multi-stage Alpine Docker image
+│   ├── pom.xml                            # Maven dependencies & build plugins
+│   └── .env.example                       # Backend environment template
+├── frontend/                              # React + Vite Frontend Project
+│   ├── src/
+│   │   ├── components/                    # Common, Home, Archive, Product, Admin UI components
+│   │   ├── context/                       # AdminContext (JWT), ContentContext (API Sync), CartContext
+│   │   ├── data/                          # Fallback datasets (Series, Chapters, Products)
+│   │   ├── hooks/                         # Custom React hooks (useDocumentTitle)
+│   │   ├── pages/                         # Home, Archive, SeriesDetail, ChapterDetail, ProductDetail, Cart
+│   │   │   └── admin/                     # AdminLogin, AdminDashboard, Series, Chapter, Product Management
+│   │   ├── services/                      # api.js, authService, seriesService, chapterService, productService, productImageService
+│   │   └── utils/                         # slugify, formatCurrency, constants
+│   ├── vercel.json                        # Vercel SPA routing
+│   ├── package.json
+│   └── .env.example                       # Frontend environment template
+├── render.yaml                            # Render Blueprint deployment specification
+├── vercel.json                            # Root Vercel SPA deployment configuration
+└── README.md
 ```
 
 ---
 
-## 🚀 Setup & Execution Instructions
+## 4. REST API Endpoint Reference
 
-### Frontend (React + Vite)
-```bash
-# 1. Navigate to frontend directory
-cd frontend
+**Base URL**: `http://localhost:8081/api/v1`  
+**Swagger UI**: `http://localhost:8081/swagger-ui/index.html`
 
-# 2. Install dependencies
-npm install
+### Public Storefront Endpoints (No Authentication Required)
 
-# 3. Launch development server on port 3000
-npm run dev
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/health` | Backend heartbeat check |
+| `POST` | `/api/v1/auth/login` | Admin authentication (returns JWT token) |
+| `GET` | `/api/v1/public/series` | Retrieve all `PUBLISHED` series |
+| `GET` | `/api/v1/public/series/{slug}` | Retrieve series by slug with published status |
+| `GET` | `/api/v1/public/series/{seriesSlug}/chapters` | Retrieve chapters within a series in order |
+| `GET` | `/api/v1/public/chapters/{seriesSlug}/{chapterSlug}` | Retrieve individual editorial chapter narrative |
+| `GET` | `/api/v1/public/products` | Retrieve published products (supports `?search=` filter) |
+| `GET` | `/api/v1/public/products/{slug}` | Retrieve published product by slug with images & sizes |
 
-# 4. Compile production build
-npm run build
-```
+### Protected Administrative Endpoints (Requires `Authorization: Bearer <token>` & `ADMIN` Role)
 
-### Backend (Spring Boot + Neon PostgreSQL)
-```bash
-# 1. Navigate to backend directory
-cd backend
-
-# 2. Compile source code
-.\mvnw.cmd clean compile
-
-# 3. Execute automated unit & integration tests
-.\mvnw.cmd test
-
-# 4. Launch Spring Boot application on port 8081
-.\mvnw.cmd spring-boot:run
-```
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/auth/me` | Retrieve currently authenticated admin details |
+| `GET` | `/api/v1/series` | Get all series (both `PUBLISHED` and `DRAFT`) |
+| `POST` | `/api/v1/series` | Create a new series |
+| `GET` | `/api/v1/series/{id}` | Get series by numeric ID |
+| `GET` | `/api/v1/series/slug/{slug}` | Get series by slug |
+| `PUT` | `/api/v1/series/{id}` | Update existing series |
+| `DELETE`| `/api/v1/series/{id}` | Permanently delete series |
+| `GET` | `/api/v1/chapters` | Get all chapters across all series |
+| `POST` | `/api/v1/chapters` | Create a new narrative chapter |
+| `GET` | `/api/v1/chapters/{id}` | Get chapter by ID |
+| `GET` | `/api/v1/chapters/slug/{seriesSlug}/{chapterSlug}` | Get chapter by series and chapter slug |
+| `GET` | `/api/v1/chapters/series/{seriesId}` | Get chapters in a series ordered by displayOrder |
+| `PUT` | `/api/v1/chapters/{id}` | Update chapter |
+| `DELETE`| `/api/v1/chapters/{id}` | Delete chapter |
+| `GET` | `/api/v1/products` | Get all products with images and inventory |
+| `POST` | `/api/v1/products` | Create a new luxury garment |
+| `GET` | `/api/v1/products/{id}` | Get product by ID |
+| `GET` | `/api/v1/products/slug/{slug}` | Get product by slug |
+| `GET` | `/api/v1/products/series/{seriesId}` | Get products assigned to a series |
+| `PUT` | `/api/v1/products/{id}` | Update product specifications and stock |
+| `DELETE`| `/api/v1/products/{id}` | Delete product |
+| `POST` | `/api/v1/products/{productId}/images` | Add image URL to product (validates HTTP/HTTPS) |
+| `GET` | `/api/v1/products/{productId}/images` | Get all images for a product in display order |
+| `PUT` | `/api/v1/products/{productId}/images/{imageId}` | Update image URL, alt text, or display order |
+| `DELETE`| `/api/v1/products/{productId}/images/{imageId}` | Delete image belonging to product |
 
 ---
 
-## 🔑 Demonstration Admin CMS Login
+## 5. Security & Authentication
 
-The admin panel is accessible at `/admin/login` or via the discrete lock / "Admin CMS Demo" link in the footer and navbar.
+- **Algorithm**: HMAC-SHA256 with 256-bit cryptographic secret.
+- **Token Validity**: 24 hours (`86,400,000` ms).
+- **Password Encoding**: BCrypt (strength 12).
+- **Session Policy**: Stateless (`SessionCreationPolicy.STATELESS`).
 
-- **Admin Login URL**: `http://localhost:3000/admin/login`
+### Pre-Seeded Admin Credentials
+At startup, `AdminUserSeeder` automatically verifies or creates the administrative account:
 - **Email**: `admin@quietbattles.demo`
 - **Password**: `QuietBattles@2026`
-- **Autofill Helper**: A convenient *"Autofill Form"* button is provided on the login page for instantaneous 1-click evaluation.
-
-> [!NOTE]
-> This is a frontend-only demonstration authentication session. Credentials and session tokens are simulated and stored in browser `LocalStorage` without claiming to be production security.
+- **Role**: `ADMIN`
 
 ---
 
-## ✨ Implemented Features
+## 6. Local Development Setup
 
-### Public Storefront
-1. **Cinematic Hero**: 100vh desktop hero with background subtle zoom, dark multi-layer gradients, large Cormorant Garamond typography, and CTAs.
-2. **Split Brand Introduction**: High-contrast editorial imagery with statement quotes and typography.
-3. **Featured Series**: Showcase card for Series 01 with chapter counts and narrative previews.
-4. **Brand Philosophy**: Three architectural axiom blocks: *01 Silence*, *02 Strength*, *03 Identity*.
-5. **Featured Product**: Signature piece showcase for *THE GENTLE ARMOR OVERSIZED TEE* with price (₹1,499) and direct purchase link.
-6. **Brand Statement**: Full-width typographic tribute: *"YOUR STORY. YOUR STRENGTH. YOUR ARMOR."*
-7. **The Archive (`/archive`)**: Curated overview of series editions with hover zoom effects.
-8. **Series Detail (`/archive/series-01`)**: Full-width cover, curatorial statement, and cards for all 5 chapters.
-9. **All Five Chapters Available**:
-   - `Chapter 01 — THE SILENCE` (Opening quote, main story, visual study, related product)
-   - `Chapter 02 — THE WEIGHT`
-   - `Chapter 03 — THE RESILIENCE`
-   - `Chapter 04 — THE REBUILDING`
-   - `Chapter 05 — THE GENTLE ARMOR`
-10. **Previous & Next Story Navigation**: Reusable chapter component with sequential pagination between chapters.
-11. **Interactive Product Detail (`/products/gentle-armor`)**:
-    - Multi-view interactive product gallery (thumbnails + large display)
-    - Size selector (S, M, L, XL, XXL) with active state validation
-    - Quantity selector (+ / -)
-    - Add to Cart with confirmation feedback toast and navbar badge increment
-    - Expandable accordions for Fabric Details, Care Instructions, and Delivery Guarantee
-    - Related armor product suggestions
-12. **Shopping Bag (`/cart`)**:
-    - Item breakdown with thumbnails, sizes, prices, and quantities
-    - Real-time subtotal calculation and free shipping threshold
-    - Remove items and clear cart actions
-    - LocalStorage persistence across page reloads
-    - Assessment modal on checkout: *"Checkout functionality is not available in this assessment prototype."*
-13. **Brand Storytelling (`/about`)**: Editorial essay on *"The Story Behind the Silence"*, material philosophy, and the meaning of *Wear Your Battles*.
-14. **Contact Page (`/contact`)**: Minimal form with client-side field validation, studio hours, and demo success state.
-15. **Editorial 404 Page (`*`)**: Luxury styled missing-page fallback with quick return triggers.
+### Prerequisites
+- Java 21 JDK installed (`java -version`)
+- Node.js 18+ and npm (`node -v`)
 
-### Admin CMS Panel
-1. **CMS Dashboard (`/admin/dashboard`)**: Summary cards (Total Series, Chapters, Products, Published Items), quick-add triggers, and recent inventory tables.
-2. **Series Management (`/admin/series`)**: Create, Edit, and Delete series editions. Live image preview and instant reflection on the public Archive.
-3. **Chapter Management (`/admin/chapters`)**: Author stories, edit opening quotes, update themes, assign parent series, and attach related garments.
-4. **Product Management (`/admin/products`)**: Manage pricing, categories, sizing tags, stock levels, and photography URLs.
-5. **Deletion Protection**: Confirmation modals with item name verification before deletion.
-6. **Data Reset**: *"Reset Demo Data"* button in sidebar to restore initial sample baseline at any time.
+### 1. Run the Backend
+```powershell
+cd backend
+# Copy environment configuration
+cp .env.example .env
+# Run with Maven Wrapper (starts on http://localhost:8081)
+./mvnw.cmd spring-boot:run
+```
+
+Verify backend health:
+```bash
+curl http://localhost:8081/api/v1/health
+```
+
+### 2. Run the Frontend
+```powershell
+cd frontend
+# Install dependencies
+npm install
+# Start Vite development server (starts on http://localhost:3000)
+npm run dev
+```
+
+Open `http://localhost:3000` in your browser.
+
+### 3. Accessing the Admin CMS
+Navigate to `http://localhost:3000/admin/login` and log in with:
+- **Email**: `admin@quietbattles.demo`
+- **Password**: `QuietBattles@2026`
 
 ---
 
-## 🌐 Vercel Deployment Instructions
+## 7. Production Deployment Guide
 
-1. **Push to GitHub**:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: complete QUIET BATTLES luxury fashion brand website"
-   git remote add origin <your-github-repo-url>
-   git push -u origin main
-   ```
-2. **Connect to Vercel**:
-   - Log in to [Vercel](https://vercel.com).
-   - Click **"Add New Project"** and import the repository.
-   - Framework Preset: **Vite**.
-   - Build Command: `npm run build`.
-   - Output Directory: `dist`.
-3. **Client-Side Routing (`vercel.json`)**:
-   - The included `vercel.json` ensures all deep routes (e.g. `/archive/series-01/chapter-01`, `/admin/dashboard`) redirect to `index.html` without 404 errors on browser refresh:
-   ```json
-   {
-     "rewrites": [
-       {
-         "source": "/(.*)",
-         "destination": "/index.html"
-       }
-     ]
-   }
-   ```
-4. **Deploy**:
-   - Click **Deploy**. Vercel will build the project and output a live production URL in less than 60 seconds.
+### A. Deploy Backend to Render
+1. Push this repository to GitHub.
+2. In Render Dashboard, click **New +** -> **Blueprint**.
+3. Connect your repository (`render.yaml` is automatically detected).
+4. Configure environment variables in Render:
+   - `DB_URL`: `jdbc:postgresql://<neon-host>:5432/neondb?sslmode=require`
+   - `DB_USERNAME`: `<neon-username>`
+   - `DB_PASSWORD`: `<neon-password>`
+   - `JWT_SECRET`: `<secure-random-256-bit-string>`
+   - `CORS_ALLOWED_ORIGINS`: `https://quiet-battles.vercel.app`
+5. Click **Apply**. Render builds the multi-stage Docker container and starts the Spring Boot service.
+
+### B. Deploy Frontend to Vercel
+1. In Vercel Dashboard, click **Add New** -> **Project**.
+2. Import the GitHub repository.
+3. Configure the project settings:
+   - **Root Directory**: `frontend` (or leave default if using root `vercel.json`)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Add Environment Variable:
+   - `VITE_API_BASE_URL`: `https://quiet-battles-backend.onrender.com/api/v1`
+5. Click **Deploy**. Vercel will build and deploy the SPA with client-side routing.
 
 ---
 
-## ⚠️ Frontend-Only Limitations
+## 8. Quality Assurance & Testing
 
-In strict adherence to the assessment instructions prohibiting backends, databases, and external payment APIs:
-1. **No Backend / Database**: No Node.js, Spring Boot, PostgreSQL, MongoDB, or external database APIs are implemented.
-2. **Payment Processing**: Checkout does not connect to Stripe, Razorpay, or banks; an assessment prototype notice is shown instead.
-3. **Authentication**: Admin credentials validate locally on the client; session status resides in `LocalStorage`.
-4. **Persistence Scope**: Content created or edited in the Admin CMS persists in the reviewer's browser `LocalStorage`. Clearing browser cache restores the baseline dataset.
-5. **Contact Form**: Form data is validated on the client and stored in local state; no external SMTP mailer is triggered.
-
-For complete architectural details, interview defenses, and Spring Boot / PostgreSQL integration roadmaps, refer to:
-- [📖 Project Overview & Architecture Guide](docs/project-overview.md)
-- [🎙️ Technical Presentation & Interview Defense](docs/technical-presentation.md)
-
----
-
-## 📄 License & Credits
-- **Company**: Pholus Globos Facility Service Pvt. Ltd.
-- **Project**: QUIET BATTLES™
-- **All Rights Reserved**: © 2026 QUIET BATTLES™.
-
+- **Backend Unit & Integration Tests**: Run `./mvnw test` inside `backend/`. Covers controllers, security, services, repositories, and image URL validation.
+- **Frontend Production Build**: Run `npm run build` inside `frontend/` to generate optimized production assets.
+- **Client Fallback Resilience**: If the backend is temporarily offline, the frontend falls back gracefully to local datasets so user browsing is never interrupted.
