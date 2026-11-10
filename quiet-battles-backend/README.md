@@ -158,3 +158,4 @@ The server will start at: [`http://localhost:8081`](http://localhost:8081)
   - *Phase 2*: JPA Entities, Repositories, Services, and REST CRUD controllers for Series, Chapters, and Products.
   - *Phase 3*: Spring Security JWT Authentication, Admin User Role, and Refresh Tokens.
   - *Phase 4*: Cloudinary image storage integration & React frontend API client connection.
+

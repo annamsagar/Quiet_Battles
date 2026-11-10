@@ -88,3 +88,4 @@ public class ApiErrorResponse {
         this.validationErrors = validationErrors;
     }
 }
+

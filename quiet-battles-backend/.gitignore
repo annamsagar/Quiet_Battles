@@ -34,6 +34,8 @@ target/
 .env
 .env.local
 .env.*.local
+*local.properties
+application-local.properties
 *.secret
 *.pem
 *.key
@@ -41,3 +43,4 @@ target/
 ### Logs ###
 logs/
 *.log
+

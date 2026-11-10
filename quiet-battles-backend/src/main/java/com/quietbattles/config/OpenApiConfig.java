@@ -52,3 +52,4 @@ public class OpenApiConfig {
                                 .description("Enter JWT Bearer token once authenticated (Phase 3 integration)")));
     }
 }
+

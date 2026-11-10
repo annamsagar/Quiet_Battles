@@ -32,3 +32,4 @@ class HealthControllerTest {
                 .andExpect(jsonPath("$.message").value("Backend is running successfully"));
     }
 }
+

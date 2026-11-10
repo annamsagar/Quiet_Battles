@@ -13,3 +13,4 @@ class QuietBattlesApplicationTests {
         // Confirms that the Spring ApplicationContext loads without error
     }
 }
+

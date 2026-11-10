@@ -30,3 +30,4 @@ public class QuietBattlesApplication {
         log.info("------------------------------------------------------------------\n");
     }
 }
+
