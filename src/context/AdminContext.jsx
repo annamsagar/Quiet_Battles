@@ -1,72 +1,66 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { DEMO_ADMIN_CONFIG, STORAGE_KEYS } from '../utils/constants';
+import { authService } from '../services/authService';
 
 const AdminContext = createContext(null);
 
 export const AdminProvider = ({ children }) => {
-  const [session, setSession] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.ADMIN_SESSION);
-      return stored ? JSON.parse(stored) : null;
-    } catch (e) {
-      console.warn('Failed parsing admin session:', e);
-      return null;
-    }
-  });
-
+  const [currentUser, setCurrentUser] = useState(() => authService.getCachedUser());
   const [authError, setAuthError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Verify stored session on mount against /api/v1/auth/me
   useEffect(() => {
-    try {
-      if (session) {
-        localStorage.setItem(STORAGE_KEYS.ADMIN_SESSION, JSON.stringify(session));
+    const verifySession = async () => {
+      if (authService.hasToken()) {
+        try {
+          const profile = await authService.getCurrentAdmin();
+          setCurrentUser((prev) => ({ ...prev, ...profile }));
+        } catch (err) {
+          console.warn('Session verification failed on mount:', err?.message);
+          // Token expired or invalid
+          authService.logout();
+          setCurrentUser(null);
+        }
       } else {
-        localStorage.removeItem(STORAGE_KEYS.ADMIN_SESSION);
+        setCurrentUser(null);
       }
-    } catch (e) {
-      console.error('Error persisting admin session:', e);
-    }
-  }, [session]);
+      setLoading(false);
+    };
 
-  const login = (email, password) => {
+    verifySession();
+  }, []);
+
+  const login = async (email, password) => {
     setAuthError(null);
-    const cleanEmail = (email || '').trim().toLowerCase();
-    const cleanPassword = (password || '').trim();
-
-    if (
-      cleanEmail === DEMO_ADMIN_CONFIG.email.toLowerCase() &&
-      cleanPassword === DEMO_ADMIN_CONFIG.password
-    ) {
-      const newSession = {
-        email: cleanEmail,
-        name: DEMO_ADMIN_CONFIG.name,
-        role: DEMO_ADMIN_CONFIG.role,
-        loginAt: new Date().toISOString(),
-        isDemoSession: true,
-      };
-      setSession(newSession);
-      return { success: true };
-    } else {
-      const errorMsg = 'Invalid demonstration credentials. Please check the prefilled demo email and password.';
-      setAuthError(errorMsg);
-      return { success: false, error: errorMsg };
+    try {
+      const data = await authService.login(email, password);
+      setCurrentUser(data);
+      return { success: true, data };
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        'Authentication failed. Please verify your administrator credentials.';
+      setAuthError(message);
+      return { success: false, error: message };
     }
   };
 
   const logout = () => {
-    setSession(null);
+    authService.logout();
+    setCurrentUser(null);
     setAuthError(null);
   };
 
   return (
     <AdminContext.Provider
       value={{
-        isAuthenticated: !!session,
-        currentUser: session,
+        isAuthenticated: !!currentUser,
+        currentUser,
         login,
         logout,
         authError,
         setAuthError,
+        loading,
       }}
     >
       {children}
@@ -81,4 +75,3 @@ export const useAdmin = () => {
   }
   return context;
 };
-
