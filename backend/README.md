@@ -3,13 +3,13 @@
 > **Brand**: QUIET BATTLES™  
 > **Tagline**: *"WEAR YOUR BATTLES."*  
 > **Architectural Paradigm**: Monolithic Layered REST API Service  
-> **Stack**: Java 21, Spring Boot 3.2.5, Spring Data JPA, PostgreSQL, Spring Security, Jakarta Validation, Springdoc OpenAPI / Swagger  
+> **Stack**: Java 21, Spring Boot 3.2.5, Spring Data JPA, PostgreSQL (Neon Cloud DB), Spring Security, Jakarta Validation, Springdoc OpenAPI / Swagger  
 
 ---
 
 ## 🏛️ 1. Project Overview
 
-The **QUIET BATTLES™ Backend** is the enterprise service layer engineered to power the international luxury streetwear storefront and Content Management System. It transitions the application from client-side `LocalStorage` persistence to a robust, transactional, multi-tier Java backend backed by **PostgreSQL**.
+The **QUIET BATTLES™ Backend** is the enterprise service layer engineered to power the international luxury streetwear storefront and Content Management System. It transitions the application from client-side `LocalStorage` persistence to a robust, transactional, multi-tier Java backend backed by **PostgreSQL** (hosted on Neon Serverless Cloud).
 
 ### Key Architectural Capabilities
 - **Monolithic Layered Design**: Clean division of concerns across `controller`, `service`, `repository`, `entity`, `dto`, `security`, and `config`.
@@ -17,6 +17,7 @@ The **QUIET BATTLES™ Backend** is the enterprise service layer engineered to p
 - **Spring Security Foundation**: Stateless session management, CSRF disabled for APIs, public health and Swagger endpoints, with hooks prepared for Phase 3 JWT authentication.
 - **Global Error Handling**: Centralized `@RestControllerAdvice` delivering consistent, sanitized `ApiErrorResponse` payloads without stack trace leakage.
 - **Interactive OpenAPI Documentation**: Swagger UI pre-configured at `http://localhost:8081/swagger-ui/index.html`.
+- **JPA & Hibernate ORM**: Clean domain models with audit timestamps, lifecycle hooks (`@PrePersist`, `@PreUpdate`), precise financial arithmetic (`BigDecimal(10,2)`), and text fields for editorial narratives.
 
 ---
 
@@ -28,10 +29,10 @@ The **QUIET BATTLES™ Backend** is the enterprise service layer engineered to p
 | **Framework** | Spring Boot | 3.2.5 |
 | **Build Tool** | Apache Maven | 3.9+ (includes self-contained `mvnw` wrapper) |
 | **Web Layer** | Spring Web (MVC) | RESTful controllers returning JSON |
-| **Persistence** | Spring Data JPA / Hibernate | 6.x ORM with HikariCP connection pooling |
-| **Database** | PostgreSQL | 18 (Local default on port 5432) |
-| **Security** | Spring Security | 6.x (Stateless, prepared for JWT) |
-| **Validation** | Jakarta Bean Validation | Hibernate Validator (`@NotNull`, `@Size`, `@Min`) |
+| **Persistence** | Spring Data JPA / Hibernate | 6.4.4 ORM with HikariCP connection pooling |
+| **Database** | PostgreSQL | Neon Serverless Cloud (AWS us-east-2) |
+| **Security** | Spring Security | 6.2.4 (Stateless, prepared for JWT) |
+| **Validation** | Jakarta Bean Validation | Hibernate Validator (`@NotNull`, `@Size`, `@Min`, `@NotBlank`) |
 | **Documentation** | Springdoc OpenAPI / Swagger UI | 2.5.0 (`/swagger-ui/index.html`) |
 
 ---
@@ -39,7 +40,7 @@ The **QUIET BATTLES™ Backend** is the enterprise service layer engineered to p
 ## 📂 3. Package Structure
 
 ```
-quiet-battles-backend/
+backend/
 ├── .mvn/wrapper/                    # Self-contained Maven wrapper binaries
 ├── src/
 │   ├── main/
@@ -47,17 +48,35 @@ quiet-battles-backend/
 │   │   │   ├── config/              # Infrastructure beans (CorsConfig, OpenApiConfig)
 │   │   │   ├── controller/          # REST controllers (HealthController)
 │   │   │   ├── dto/                 # Request & response data transfer objects (HealthResponse)
-│   │   │   ├── entity/              # JPA domain entities (Phase 2 target)
+│   │   │   ├── entity/              # JPA domain entities (Phase 2)
+│   │   │   │   ├── Chapter.java
+│   │   │   │   ├── Product.java
+│   │   │   │   ├── ProductImage.java
+│   │   │   │   ├── Series.java
+│   │   │   │   └── User.java
+│   │   │   ├── enums/               # Domain enumerations (Phase 2)
+│   │   │   │   ├── ContentStatus.java
+│   │   │   │   └── UserRole.java
 │   │   │   ├── exception/           # Global exception handling (GlobalExceptionHandler, ApiErrorResponse)
-│   │   │   ├── mapper/              # Entity <-> DTO converters (Phase 2 target)
-│   │   │   ├── repository/          # Spring Data JPA repositories (Phase 2 target)
+│   │   │   ├── mapper/              # Entity <-> DTO converters
+│   │   │   ├── repository/          # Spring Data JPA repositories (Phase 2)
+│   │   │   │   ├── ChapterRepository.java
+│   │   │   │   ├── ProductImageRepository.java
+│   │   │   │   ├── ProductRepository.java
+│   │   │   │   ├── SeriesRepository.java
+│   │   │   │   └── UserRepository.java
 │   │   │   ├── security/            # SecurityFilterChain & PasswordEncoder (SecurityConfig)
-│   │   │   ├── service/             # Business logic interfaces & services (Phase 2 target)
+│   │   │   ├── service/             # Business logic interfaces & services
 │   │   │   └── QuietBattlesApplication.java # Spring Boot entrypoint
 │   │   └── resources/
 │   │       └── application.properties # Server port, PostgreSQL & Swagger configuration
 │   └── test/
-│       ├── java/com/quietbattles/   # Unit and MockMvc integration tests
+│       ├── java/com/quietbattles/   # Unit and integration tests
+│       │   ├── controller/
+│       │   │   └── HealthControllerTest.java
+│       │   ├── entity/
+│       │   │   └── EntityMappingIntegrationTest.java
+│       │   └── QuietBattlesApplicationTests.java
 │       └── resources/
 │           └── application-test.properties
 ├── .env.example                     # Environment variables template
@@ -69,34 +88,25 @@ quiet-battles-backend/
 
 ---
 
-## 🗄️ 4. PostgreSQL Database Setup
+## 🗄️ 4. Database Schema & JPA Entity Mappings (Phase 2)
 
-### Step 1: Verify PostgreSQL Service
-Ensure PostgreSQL is active on port `5432`:
-```powershell
-Get-Service *postgres*
-```
+### Table Specifications
 
-### Step 2: Create the Database
-Connect using `psql` and create the target database:
-```sql
-CREATE DATABASE quiet_battles_db;
-```
+| Entity | PostgreSQL Table | Primary Key | Key Fields & Constraints | Relationships |
+| :--- | :--- | :--- | :--- | :--- |
+| **`User`** | `users` | `id` (BIGSERIAL) | `username` (UK, NOT NULL), `email` (UK, NOT NULL), `password`, `role` (ADMIN), `enabled` | Self-contained administrative entity |
+| **`Series`** | `series` | `id` (BIGSERIAL) | `title`, `slug` (UK, NOT NULL), `description` (TEXT), `cover_image_url`, `status` (DRAFT, PUBLISHED) | 1:M `chapters`, 1:M `products` |
+| **`Product`** | `products` | `id` (BIGSERIAL) | `name`, `slug` (UK, NOT NULL), `description` (TEXT), `price` (NUMERIC 10,2), `category`, `stock_quantity`, `status` | M:1 `series`, 1:M `images`, 1:M `chapters`, 1:M `product_sizes` |
+| **`ProductImage`** | `product_images` | `id` (BIGSERIAL) | `image_url` (NOT NULL), `alt_text`, `display_order`, `created_at` | M:1 `product` (FK NOT NULL) |
+| **`Chapter`** | `chapters` | `id` (BIGSERIAL) | `title`, `slug`, `chapter_number` (NOT NULL, >=1), `theme`, `short_description`, `opening_quote`, `story_content` (TEXT), `cover_image_url`, `secondary_image_url`, `display_order`, `status` | M:1 `series` (FK NOT NULL), M:1 `product` (FK Optional), UK `(series_id, chapter_number)` |
+| **`ProductSize`** | `product_sizes` | `(product_id, size)` | `size` (VARCHAR 10) | `@ElementCollection` table linked to `products` |
 
-### Step 3: Configure Environment Variables
-You can override credentials at runtime or via environment variables:
-```powershell
-$env:DB_URL="jdbc:postgresql://localhost:5432/quiet_battles_db"
-$env:DB_USERNAME="postgres"
-$env:DB_PASSWORD="0000"
-$env:SERVER_PORT="8081"
-```
-
-Defaults configured in `application.properties`:
-- **URL**: `jdbc:postgresql://localhost:5432/quiet_battles_db`
-- **Username**: `postgres`
-- **Password**: `0000`
-- **Port**: `8081`
+### Architectural Design Decisions
+1. **PostgreSQL Compatibility**: Descriptions and editorial narrative content are mapped via `@Column(columnDefinition = "TEXT")` rather than `@Lob` to prevent PostgreSQL from treating strings as Large Object references (OIDs).
+2. **Financial Precision**: Garment pricing uses `BigDecimal` with `@Column(precision = 10, scale = 2)` to eliminate floating-point rounding inaccuracies.
+3. **Circular Reference Prevention**: Avoided Lombok `@Data` on entity models containing bidirectional relationships to avoid recursive `hashCode()`, `equals()`, and `toString()` stack overflows.
+4. **Data Integrity Constraints**: Unique constraint `uk_series_chapter_number` prevents duplicate chapter ordering within any series.
+5. **Auditing**: All entities automatically maintain `createdAt` and `updatedAt` via `@PrePersist` and `@PreUpdate` lifecycle callbacks.
 
 ---
 
@@ -104,26 +114,29 @@ Defaults configured in `application.properties`:
 
 ### Clean & Compile
 ```powershell
-cd quiet-battles-backend
+cd backend
 .\mvnw.cmd clean compile
 ```
 
-### Run Tests
+### Run Tests (including Entity Mapping Integration Test)
 ```powershell
+cd backend
 .\mvnw.cmd test
 ```
 
 ### Package Application JAR
 ```powershell
+cd backend
 .\mvnw.cmd package -DskipTests
 ```
 
 ### Run Spring Boot Application
 ```powershell
+cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
-The server will start at: [`http://localhost:8081`](http://localhost:8081)
+The server starts at: [`http://localhost:8081`](http://localhost:8081)
 
 ---
 
@@ -143,19 +156,16 @@ The server will start at: [`http://localhost:8081`](http://localhost:8081)
 
 ### 2. Swagger UI Documentation
 - **URL**: [`http://localhost:8081/swagger-ui/index.html`](http://localhost:8081/swagger-ui/index.html)
-- Interactive OpenAPI sandbox detailing endpoints, schema models, and JWT authorize scheme.
 
 ### 3. OpenAPI Raw JSON Specification
 - **URL**: [`http://localhost:8081/v3/api-docs`](http://localhost:8081/v3/api-docs)
 
 ---
 
-## 🛡️ 7. Phase 1 Implementation Notes
+## 🛡️ 7. Development Roadmap
 
-- **Spring Security**: Configured in stateless mode. Disables CSRF for REST APIs, connects CORS, explicitly permits `/api/v1/health` and `/swagger-ui/**`, and establishes the foundation for JWT token filters in Phase 3.
-- **DDL Mode**: Set to `spring.jpa.hibernate.ddl-auto=update` for local developer velocity. In production, Flyway version-controlled migrations will be introduced.
-- **Upcoming Phases**:
-  - *Phase 2*: JPA Entities, Repositories, Services, and REST CRUD controllers for Series, Chapters, and Products.
-  - *Phase 3*: Spring Security JWT Authentication, Admin User Role, and Refresh Tokens.
-  - *Phase 4*: Cloudinary image storage integration & React frontend API client connection.
-
+- [x] **Phase 1**: Monolithic Layered Architecture, Spring Security baseline, CORS, Health Check, Swagger UI.
+- [x] **Phase 2**: Database Schema Design, JPA Entities (`User`, `Series`, `Chapter`, `Product`, `ProductImage`), Enums (`ContentStatus`, `UserRole`), Spring Data JPA Repositories, Neon DB Serverless PostgreSQL Schema generation and verification tests.
+- [ ] **Phase 3**: Spring Security JWT Authentication, Admin User Role, Login/Refresh Tokens, and Protected CMS Endpoints.
+- [ ] **Phase 4**: Spring Data JPA REST Services & Controllers for Series, Chapters, and Products CRUD.
+- [ ] **Phase 5**: Cloudinary Image Storage Integration and React Frontend API Client Connection.
