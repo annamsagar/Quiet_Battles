@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
@@ -25,10 +28,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
 
     private final CorsConfigurationSource corsConfigurationSource;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ObjectMapper objectMapper;
 
-    public SecurityConfig(CorsConfigurationSource corsConfigurationSource) {
+    public SecurityConfig(
+            CorsConfigurationSource corsConfigurationSource,
+            JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.corsConfigurationSource = corsConfigurationSource;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule());
     }
@@ -76,7 +83,13 @@ public class SecurityConfig {
                         // 1. Health check endpoint (Public)
                         .requestMatchers(HttpMethod.GET, "/api/v1/health").permitAll()
 
-                        // 2. Swagger / OpenAPI documentation endpoints (Public)
+                        // 2. Auth login endpoint (Public)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+
+                        // 3. Public consumer storefront APIs (Public)
+                        .requestMatchers("/api/v1/public/**").permitAll()
+
+                        // 4. Swagger / OpenAPI documentation endpoints (Public)
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
@@ -86,12 +99,18 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
-                        // 3. Pre-flight CORS OPTIONS requests
+                        // 5. Pre-flight CORS OPTIONS requests (Public)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // 4. Default: Require authentication for protected business endpoints
+                        // 6. All remaining /api/v1/** administrative endpoints require ADMIN role
+                        .requestMatchers("/api/v1/**").hasRole("ADMIN")
+
+                        // 7. Catch-all: require authentication
                         .anyRequest().authenticated()
-                );
+                )
+
+                // Add JWT filter before standard Spring username/password filter
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -99,5 +118,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 }

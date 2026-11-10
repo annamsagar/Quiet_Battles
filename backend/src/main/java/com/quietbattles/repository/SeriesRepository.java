@@ -13,8 +13,9 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
 
     Optional<Series> findBySlug(String slug);
 
-    List<Series> findByStatus(ContentStatus status);
+    Optional<Series> findBySlugAndStatus(String slug, ContentStatus status);
 
     boolean existsBySlug(String slug);
-}
 
+    List<Series> findByStatus(ContentStatus status);
+}
