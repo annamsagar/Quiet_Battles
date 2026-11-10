@@ -10,6 +10,7 @@ const Home = lazy(() => import('../pages/Home'));
 const Archive = lazy(() => import('../pages/Archive'));
 const SeriesDetail = lazy(() => import('../pages/SeriesDetail'));
 const ChapterDetail = lazy(() => import('../pages/ChapterDetail'));
+const Shop = lazy(() => import('../pages/Shop'));
 const ProductDetail = lazy(() => import('../pages/ProductDetail'));
 const Cart = lazy(() => import('../pages/Cart'));
 const About = lazy(() => import('../pages/About'));
@@ -41,11 +42,14 @@ export const AppRoutes = () => {
           {/* Chapter Routes (Dynamic & Explicit) */}
           <Route path="archive/:seriesSlug/:chapterSlug" element={<ChapterDetail />} />
 
-          {/* Product Routes (Explicit & Dynamic) */}
+          {/* Shop & Collections Catalog Routes */}
+          <Route path="shop" element={<Shop />} />
+          <Route path="collections" element={<Shop />} />
+          <Route path="products" element={<Shop />} />
+
+          {/* Product Detail Routes (Explicit & Dynamic) */}
           <Route path="products/gentle-armor" element={<ProductDetail />} />
           <Route path="products/:productSlug" element={<ProductDetail />} />
-          <Route path="products" element={<Navigate to="/products/gentle-armor" replace />} />
-          <Route path="shop" element={<Navigate to="/products/gentle-armor" replace />} />
 
           {/* Core Brand Pages */}
           <Route path="cart" element={<Cart />} />

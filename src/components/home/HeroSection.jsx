@@ -88,7 +88,7 @@ export const HeroSection = () => {
             </Link>
 
             <Link
-              to="/products/gentle-armor"
+              to="/shop"
               className="px-8 py-4 bg-black/40 backdrop-blur-sm border border-[#F5F1EA]/40 text-[#F5F1EA] text-xs uppercase tracking-widest-xl font-medium hover:border-[#A88B65] hover:text-[#A88B65] hover:bg-black/60 transition-all duration-300 text-center"
             >
               <span>DISCOVER THE COLLECTION</span>

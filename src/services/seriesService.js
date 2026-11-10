@@ -43,3 +43,4 @@ export const seriesService = {
     return true;
   },
 };
+

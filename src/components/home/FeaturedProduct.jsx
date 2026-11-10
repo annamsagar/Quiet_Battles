@@ -117,8 +117,14 @@ export const FeaturedProduct = ({ product }) => {
                 to={`/products/${currentProduct.slug}`}
                 className="w-full sm:w-auto px-8 py-4 bg-[#F5F1EA] text-[#0A0A0A] text-xs uppercase tracking-widest-xl font-semibold hover:bg-[#A88B65] hover:text-white transition-all duration-300 text-center flex items-center justify-center gap-2 group shadow-lg"
               >
-                <span>VIEW PRODUCT</span>
+                <span>VIEW SPECIFICATIONS</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                to="/shop"
+                className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#333333] hover:border-[#A88B65] text-[#F5F1EA] text-xs uppercase tracking-widest-xl font-medium transition-all duration-300 text-center flex items-center justify-center gap-2 group"
+              >
+                <span>BROWSE THE SHOP</span>
               </Link>
             </div>
           </motion.div>

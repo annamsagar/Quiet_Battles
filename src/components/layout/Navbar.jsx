@@ -75,6 +75,9 @@ export const Navbar = () => {
             <NavLink to="/archive" className={navLinkClass}>
               ARCHIVE
             </NavLink>
+            <NavLink to="/shop" className={navLinkClass}>
+              SHOP
+            </NavLink>
             <NavLink to="/about" className={navLinkClass}>
               ABOUT
             </NavLink>
@@ -86,14 +89,14 @@ export const Navbar = () => {
           {/* RIGHT: SHOP, CART & ADMIN BADGE */}
           <div className="flex items-center gap-6">
             <NavLink
-              to="/products/gentle-armor"
+              to="/shop"
               className={({ isActive }) =>
                 `hidden sm:inline-block text-xs uppercase tracking-widest-xl font-medium transition-colors duration-300 ${
                   isActive ? 'text-[#F5F1EA]' : 'text-[#A7A29B] hover:text-[#F5F1EA]'
                 }`
               }
             >
-              SHOP
+              COLLECTIONS
             </NavLink>
 
             {/* Shopping Cart Button */}
@@ -178,8 +181,8 @@ export const Navbar = () => {
             <NavLink to="/archive/series-01" className={mobileNavLinkClass}>
               <span>03 / SERIES 01</span>
             </NavLink>
-            <NavLink to="/products/gentle-armor" className={mobileNavLinkClass}>
-              <span>04 / SHOP COLLECTION</span>
+            <NavLink to="/shop" className={mobileNavLinkClass}>
+              <span>04 / THE SHOP</span>
             </NavLink>
             <NavLink to="/about" className={mobileNavLinkClass}>
               <span>05 / ABOUT</span>

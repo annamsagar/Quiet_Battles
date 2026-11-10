@@ -24,9 +24,13 @@ export const RelatedProductSection = ({ product }) => {
             COMPLEMENTARY ARMOR
           </h3>
         </div>
-        <span className="hidden sm:inline text-xs text-[#A7A29B] font-mono uppercase">
-          SERIES 01 INAUGURAL PIECE
-        </span>
+        <Link
+          to="/shop"
+          className="text-xs text-[#A88B65] hover:text-[#F5F1EA] font-mono uppercase tracking-wider flex items-center gap-1 group transition-colors"
+        >
+          <span>VIEW FULL SHOP</span>
+          <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+        </Link>
       </div>
 
       <div className="bg-[#151515] border border-[#2B2B2B] p-6 sm:p-10 flex flex-col md:flex-row items-center gap-8 lg:gap-12 shadow-2xl">

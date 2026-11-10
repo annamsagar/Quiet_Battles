@@ -11,7 +11,7 @@ import { useCart } from '../context/CartContext';
 import { EmptyState } from '../components/common/EmptyState';
 import { formatCurrency } from '../utils/formatCurrency';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { ShieldCheck, Truck, RefreshCw, Sparkles, ChevronDown, ChevronUp, Layers } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCw, Sparkles, ChevronDown, ChevronUp, Layers, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const ProductDetail = () => {
@@ -246,7 +246,7 @@ export const ProductDetail = () => {
         {/* Related Artifacts Collection */}
         {relatedProducts.length > 0 && (
           <div className="mt-28 pt-20 border-t border-[#222222]">
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
               <div>
                 <span className="text-xs uppercase tracking-widest-2xl text-[#A88B65] font-mono block mb-1">
                   COLLECTION CONTINUUM
@@ -255,6 +255,13 @@ export const ProductDetail = () => {
                   RELATED ARMOR PIECES
                 </h3>
               </div>
+              <Link
+                to="/shop"
+                className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#A88B65] hover:text-[#F5F1EA] transition-colors group"
+              >
+                <span>VIEW ENTIRE SHOP CATALOG</span>
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

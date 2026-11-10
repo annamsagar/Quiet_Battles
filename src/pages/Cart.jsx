@@ -71,11 +71,11 @@ export const Cart = () => {
               {/* Continue Shopping Action */}
               <div className="pt-8">
                 <Link
-                  to="/products/gentle-armor"
+                  to="/shop"
                   className="inline-flex items-center gap-2 text-xs uppercase tracking-widest-xl text-[#A7A29B] hover:text-[#A88B65] transition-colors"
                 >
                   <ArrowLeft size={14} />
-                  <span>CONTINUE BROWSING CATALOG</span>
+                  <span>CONTINUE BROWSING THE SHOP</span>
                 </Link>
               </div>
             </div>
@@ -129,9 +129,9 @@ export const Cart = () => {
         ) : (
           <EmptyState
             title="Your bag is silent"
-            description="You have not added any pieces from Series 01 to your armor bag yet."
-            actionText="Explore Collection"
-            actionLink="/products/gentle-armor"
+            description="You have not added any pieces from our collections to your armor bag yet."
+            actionText="Explore The Shop"
+            actionLink="/shop"
             icon={ShoppingBag}
           />
         )}

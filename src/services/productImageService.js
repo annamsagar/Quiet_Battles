@@ -21,3 +21,4 @@ export const productImageService = {
     return true;
   },
 };
+
