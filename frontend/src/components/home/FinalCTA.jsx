@@ -61,14 +61,21 @@ export const FinalCTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="pt-6"
+          className="pt-6 flex flex-wrap items-center justify-center gap-4"
         >
           <Link
             to="/archive"
-            className="inline-flex items-center gap-3 px-10 py-4 bg-[#F5F1EA] text-[#0A0A0A] text-xs uppercase tracking-widest-xl font-semibold hover:bg-[#A88B65] hover:text-white transition-all duration-300 shadow-2xl group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#222222] text-[#F5F1EA] hover:bg-[#333333] border border-[#333333] text-xs uppercase tracking-widest-xl font-semibold transition-all duration-300 group"
           >
             <span>EXPLORE THE ARCHIVE</span>
-            <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform" />
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#F5F1EA] text-[#0A0A0A] text-xs uppercase tracking-widest-xl font-semibold hover:bg-[#A88B65] hover:text-white transition-all duration-300 shadow-2xl group"
+          >
+            <span>VISIT THE SHOP</span>
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
 

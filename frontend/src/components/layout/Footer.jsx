@@ -50,8 +50,8 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/products/gentle-armor" className="hover:text-[#A88B65] transition-colors">
-                  The Shop
+                <Link to="/shop" className="hover:text-[#A88B65] transition-colors">
+                  The Shop (Collections)
                 </Link>
               </li>
               <li>

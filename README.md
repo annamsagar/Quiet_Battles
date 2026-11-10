@@ -89,7 +89,7 @@ QUIET BATTLES/
 │   │   ├── context/                       # AdminContext (JWT), ContentContext (API Sync), CartContext
 │   │   ├── data/                          # Fallback datasets (Series, Chapters, Products)
 │   │   ├── hooks/                         # Custom React hooks (useDocumentTitle)
-│   │   ├── pages/                         # Home, Archive, SeriesDetail, ChapterDetail, ProductDetail, Cart
+│   │   ├── pages/                         # Home, Archive, SeriesDetail, ChapterDetail, Shop (Collections), ProductDetail, Cart
 │   │   │   └── admin/                     # AdminLogin, AdminDashboard, Series, Chapter, Product Management
 │   │   ├── services/                      # api.js, authService, seriesService, chapterService, productService, productImageService
 │   │   └── utils/                         # slugify, formatCurrency, constants

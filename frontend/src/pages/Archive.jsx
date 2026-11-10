@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { PageTransition } from '../components/common/PageTransition';
 import { ArchiveHero } from '../components/archive/ArchiveHero';
 import { SeriesFeatureCard } from '../components/archive/SeriesFeatureCard';
@@ -6,7 +7,7 @@ import { SeriesCard } from '../components/archive/SeriesCard';
 import { useContent } from '../context/ContentContext';
 import { EmptyState } from '../components/common/EmptyState';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { Search } from 'lucide-react';
+import { Search, ArrowRight, Shirt } from 'lucide-react';
 
 export const Archive = () => {
   useDocumentTitle('The Archive');
@@ -127,6 +128,31 @@ export const Archive = () => {
             )}
           </div>
         )}
+
+        {/* SECTION 4: THE SHOP CALLOUT */}
+        <div className="pt-16 border-t border-[#222222]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8 sm:p-10 bg-[#111111] border border-[#222222]">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="text-[10px] font-mono uppercase tracking-widest-2xl text-[#A88B65] flex items-center justify-center sm:justify-start gap-1.5">
+                <Shirt size={12} />
+                <span>ATELIER PHYSICAL GARMENTS</span>
+              </span>
+              <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F1EA]">
+                LOOKING FOR THE PHYSICAL COLLECTION?
+              </h3>
+              <p className="text-xs sm:text-sm text-[#A7A29B] font-light max-w-xl">
+                Every literary edition in The Archive gives rise to an architectural garment collection. Browse all pieces in The Shop.
+              </p>
+            </div>
+            <Link
+              to="/shop"
+              className="px-6 py-3.5 bg-[#F5F1EA] text-[#0A0A0A] hover:bg-[#A88B65] hover:text-white text-xs font-mono uppercase tracking-wider font-semibold transition-colors flex items-center gap-2 whitespace-nowrap shadow-lg group"
+            >
+              <span>VISIT THE SHOP</span>
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
       </div>
     </PageTransition>
   );
