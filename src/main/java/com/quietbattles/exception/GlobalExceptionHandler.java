@@ -40,6 +40,40 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handle DuplicateResourceException (409 Conflict)
+     */
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateResourceException(
+            DuplicateResourceException ex, HttpServletRequest request) {
+        log.warn("Duplicate resource: {} for URI: {}", ex.getMessage(), request.getRequestURI());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    /**
+     * Handle BadRequestException & IllegalArgumentException (400 Bad Request)
+     */
+    @ExceptionHandler({BadRequestException.class, IllegalArgumentException.class})
+    public ResponseEntity<ApiErrorResponse> handleBadRequestException(
+            RuntimeException ex, HttpServletRequest request) {
+        log.warn("Bad request: {} for URI: {}", ex.getMessage(), request.getRequestURI());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
      * Handle Spring Boot 3 static resource not found (404 Not Found)
      */
     @ExceptionHandler(NoResourceFoundException.class)
@@ -144,4 +178,3 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-

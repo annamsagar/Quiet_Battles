@@ -13,10 +13,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findBySlug(String slug);
 
+    Optional<Product> findBySlugAndStatus(String slug, ContentStatus status);
+
+    boolean existsBySlug(String slug);
+
     List<Product> findBySeriesId(Long seriesId);
 
     List<Product> findByStatus(ContentStatus status);
 
-    boolean existsBySlug(String slug);
-}
+    List<Product> findByNameContainingIgnoreCase(String name);
 
+    List<Product> findByNameContainingIgnoreCaseAndStatus(String name, ContentStatus status);
+
+    long countBySeriesId(Long seriesId);
+}
