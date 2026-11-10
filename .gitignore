@@ -1,34 +1,56 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# ==============================================================================
+# QUIET BATTLES™ ROOT .GITIGNORE (MONOREPO)
+# ==============================================================================
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+*.iws
+*.iml
+*.ipr
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# Java / Maven artifacts
+# Frontend (Node / Vite)
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+**/dist-ssr/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Backend (Java / Maven)
 target/
+**/target/
 *.class
+**/classes/
 .mvn/wrapper/maven-wrapper.jar
-*local.properties
-application-local.properties
+
+# Secrets & Environment Configurations
 .env
 .env.local
+.env.*.local
+**/.env
+**/.env.*
+*local.properties
+application-local.properties
+**/*local.properties
+**/*.secret
+**/*.pem
+**/*.key
 
+# Logs
+logs/
+**/logs/
+*.log

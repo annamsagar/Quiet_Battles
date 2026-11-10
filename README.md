@@ -50,138 +50,62 @@
 
 ```
 QUIET BATTLES/
-├── public/
-│   ├── favicon.svg              # Custom luxury monogram logo
-│   ├── robots.txt               # SEO bot access rules
-│   └── sitemap.xml              # Crawlable site directory
-├── src/
-│   ├── admin/                   # Re-exports for evaluation alias paths
-│   │   ├── AdminDashboard.jsx
-│   │   ├── AdminLogin.jsx
-│   │   ├── ChapterManagement.jsx
-│   │   ├── ProductManagement.jsx
-│   │   ├── SeriesManagement.jsx
-│   │   └── index.js
-│   ├── components/
-│   │   ├── admin/               # Admin CMS UI components
-│   │   │   ├── AdminHeader.jsx
-│   │   │   ├── AdminNotification.jsx
-│   │   │   ├── AdminSidebar.jsx
-│   │   │   ├── DashboardCard.jsx
-│   │   │   ├── DataTable.jsx
-│   │   │   ├── DeleteConfirmation.jsx
-│   │   │   ├── EmptyState.jsx
-│   │   │   ├── FormField.jsx
-│   │   │   ├── ImagePreview.jsx
-│   │   │   ├── SearchBar.jsx
-│   │   │   └── StatusBadge.jsx
-│   │   ├── archive/             # Archive & series UI cards
-│   │   │   ├── ChapterCard.jsx
-│   │   │   └── SeriesCard.jsx
-│   │   ├── cart/                # Cart components
-│   │   │   └── CartItem.jsx
-│   │   ├── common/              # Global reusable UI
-│   │   │   ├── EditorialImage.jsx
-│   │   │   ├── EmptyState.jsx
-│   │   │   ├── LoadingState.jsx
-│   │   │   ├── PageTransition.jsx
-│   │   │   └── SectionHeading.jsx
-│   │   ├── home/                # Homepage editorial sections
-│   │   │   ├── BrandIntro.jsx
-│   │   │   ├── BrandPhilosophy.jsx
-│   │   │   ├── BrandStatement.jsx
-│   │   │   ├── FeaturedProduct.jsx
-│   │   │   ├── FeaturedSeries.jsx
-│   │   │   └── Hero.jsx
-│   │   ├── layout/              # Navbar & Footer
-│   │   │   ├── Footer.jsx
-│   │   │   └── Navbar.jsx
-│   │   └── product/             # Product detail interactions
-│   │       ├── AddToCartButton.jsx
-│   │       ├── ProductCard.jsx
-│   │       ├── ProductGallery.jsx
-│   │       ├── QuantitySelector.jsx
-│   │       └── SizeSelector.jsx
-│   ├── context/
-│   │   ├── AdminContext.jsx     # Frontend demo session state
-│   │   ├── CartContext.jsx      # Bag state & LocalStorage sync
-│   │   └── ContentContext.jsx   # Series, Chapter & Product CRUD state
-│   ├── data/
-│   │   ├── chapterData.js       # Complete 5-chapter editorial narratives
-│   │   ├── productData.js       # Curated streetwear catalog
-│   │   └── seriesData.js        # Series editions dataset
-│   ├── hooks/
-│   │   ├── useDocumentTitle.js  # Dynamic SEO page titles
-│   │   └── useLocalStorage.js   # Safe browser persistence
-│   ├── layouts/
-│   │   ├── AdminLayout.jsx      # CMS layout with banner & navigation
-│   │   └── PublicLayout.jsx     # Storefront layout with sticky nav & toast
-│   ├── pages/
-│   │   ├── admin/
-│   │   │   ├── AdminDashboard.jsx
-│   │   │   ├── AdminLogin.jsx
-│   │   │   ├── ChapterManagement.jsx
-│   │   │   ├── ProductManagement.jsx
-│   │   │   └── SeriesManagement.jsx
-│   │   ├── About.jsx
-│   │   ├── Archive.jsx
-│   │   ├── Cart.jsx
-│   │   ├── ChapterDetail.jsx
-│   │   ├── Contact.jsx
-│   │   ├── Home.jsx
-│   │   ├── NotFound.jsx
-│   │   ├── ProductDetail.jsx
-│   │   └── SeriesDetail.jsx
-│   ├── routes/
-│   │   ├── AppRoutes.jsx        # Lazy-loaded route architecture
-│   │   └── ProtectedRoute.jsx   # Route guard for CMS
-│   ├── utils/
-│   │   ├── constants.js         # Brand tokens & demo credentials
-│   │   ├── formatCurrency.js    # INR price formatter
-│   │   └── slugify.js           # URL slug generator
-│   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
-├── index.html
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-├── vercel.json                  # Single-page client rewrite rules
-└── vite.config.js
+├── frontend/                        # React 18 + Vite Luxury Fashion Brand Application
+│   ├── public/                      # Monogram favicon, robots.txt, sitemap.xml
+│   ├── src/                         # React components, pages, context, hooks
+│   │   ├── admin/                   # Re-exports for evaluation alias paths
+│   │   ├── components/              # Reusable UI (home, product, cart, archive, admin)
+│   │   ├── context/                 # CartContext, ContentContext, AdminContext
+│   │   ├── data/                    # Series, Chapter & Product baseline data
+│   │   ├── layouts/                 # PublicLayout & AdminLayout
+│   │   ├── pages/                   # Lazy-loaded page components
+│   │   └── routes/                  # AppRoutes with ProtectedRoute guard
+│   ├── package.json                 # Pure JavaScript dependencies
+│   ├── vite.config.js               # Port 3000
+│   └── vercel.json                  # SPA routing rules
+├── backend/                         # Spring Boot 3.2.5 REST API Service
+│   ├── src/                         # Java controllers, config, security, exceptions
+│   ├── pom.xml                      # Maven dependencies
+│   ├── mvnw & mvnw.cmd              # Self-contained Maven wrapper
+│   └── README.md                    # Backend engineering documentation
+├── docs/                            # Architectural guides & technical presentation
+├── README.md                        # Master repository documentation
+├── SUBMISSION_CHECKLIST.md          # Technical assessment verification checklist
+└── vercel.json                      # Monorepo deployment configuration
 ```
 
 ---
 
 ## 🚀 Setup & Execution Instructions
 
-### 1. Prerequisites
-- Node.js (v18.0.0 or higher recommended, tested on Node v24)
-- npm (v9.0.0 or higher)
-
-### 2. Installation
+### Frontend (React + Vite)
 ```bash
-# Clone or navigate to the project directory
-cd "c:\Users\asaga\Projects\QUIET BATTLES"
+# 1. Navigate to frontend directory
+cd frontend
 
-# Install all dependencies
+# 2. Install dependencies
 npm install
-```
 
-### 3. Launch Development Server
-```bash
+# 3. Launch development server on port 3000
 npm run dev
-```
-The application will launch automatically at: `http://localhost:3000`
 
-### 4. Production Build
-```bash
+# 4. Compile production build
 npm run build
 ```
-Generates an optimized, code-split distribution build in the `dist/` directory.
 
-### 5. Local Preview of Production Build
+### Backend (Spring Boot + Neon PostgreSQL)
 ```bash
-npm run preview
+# 1. Navigate to backend directory
+cd backend
+
+# 2. Compile source code
+.\mvnw.cmd clean compile
+
+# 3. Execute automated unit & integration tests
+.\mvnw.cmd test
+
+# 4. Launch Spring Boot application on port 8081
+.\mvnw.cmd spring-boot:run
 ```
 
 ---
