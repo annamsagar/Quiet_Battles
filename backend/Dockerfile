@@ -12,9 +12,6 @@ COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
 RUN chmod +x ./mvnw
 
-# Cache dependencies
-RUN ./mvnw dependency:go-offline -B
-
 # Copy source code and package application
 COPY src ./src
 RUN ./mvnw clean package -DskipTests -B

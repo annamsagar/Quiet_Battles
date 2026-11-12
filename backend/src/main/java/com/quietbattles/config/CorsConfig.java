@@ -47,6 +47,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
         registry.addMapping("/**")
                 .allowedOrigins(origins)
+                .allowedOriginPatterns("https://*.vercel.app", "http://localhost:*")
                 .allowedMethods(ALLOWED_METHODS.toArray(new String[0]))
                 .allowedHeaders(ALLOWED_HEADERS.toArray(new String[0]))
                 .exposedHeaders(EXPOSED_HEADERS.toArray(new String[0]))
@@ -63,6 +64,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(origins);
+        configuration.setAllowedOriginPatterns(Arrays.asList("https://*.vercel.app", "http://localhost:*"));
         configuration.setAllowedMethods(ALLOWED_METHODS);
         configuration.setAllowedHeaders(ALLOWED_HEADERS);
         configuration.setExposedHeaders(EXPOSED_HEADERS);
